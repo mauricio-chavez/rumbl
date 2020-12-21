@@ -22,6 +22,18 @@ defmodule Rumbl.Multimedia do
     Repo.all(Video)
   end
 
+  alias Rumbl.Multimedia.Category
+
+  def create_category!(name) do
+    Repo.insert!(%Category{name: name}, on_conflict: :nothing)
+  end
+
+  def list_alphabetical_categories do
+    Category
+    |> Category.alphabetical()
+    |> Repo.all()
+  end
+
   def list_user_videos(%Accounts.User{} = user) do
     Video
     |> user_videos_query(user)
